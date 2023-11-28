@@ -23,7 +23,7 @@ from .transform import GeneralizedRCNNTransform
 
 
 __all__ = [
-    "RetinaNet",
+    "RetinaNetV2",
     "RetinaNet_ResNet50_FPN_Weights",
     "RetinaNet_ResNet50_FPN_V2_Weights",
     "retinanet_resnet50_fpn",
@@ -320,7 +320,7 @@ class RetinaNetRegressionHead(nn.Module):
         return torch.cat(all_bbox_regression, dim=1)
 
 
-class RetinaNet(nn.Module):
+class RetinaNetV2(nn.Module):
     """
     Implements RetinaNet.
 
@@ -735,7 +735,7 @@ def retinanet_resnet50_fpn(
     weights_backbone: Optional[ResNet50_Weights] = ResNet50_Weights.IMAGENET1K_V1,
     trainable_backbone_layers: Optional[int] = None,
     **kwargs: Any,
-) -> RetinaNet:
+) -> RetinaNetV2:
     """
     Constructs a RetinaNet model with a ResNet-50-FPN backbone.
 
@@ -815,7 +815,7 @@ def retinanet_resnet50_fpn(
     backbone = _resnet_fpn_extractor(
         backbone, trainable_backbone_layers, returned_layers=[2, 3, 4], extra_blocks=LastLevelP6P7(256, 256)
     )
-    model = RetinaNet(backbone, num_classes, **kwargs)
+    model = RetinaNetV2(backbone, num_classes, **kwargs)
 
     if weights is not None:
         model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
@@ -838,7 +838,7 @@ def retinanet_resnet50_fpn_v2(
     weights_backbone: Optional[ResNet50_Weights] = None,
     trainable_backbone_layers: Optional[int] = None,
     **kwargs: Any,
-) -> RetinaNet:
+) -> RetinaNetV2:
     """
     Constructs an improved RetinaNet model with a ResNet-50-FPN backbone.
 
@@ -894,7 +894,7 @@ def retinanet_resnet50_fpn_v2(
         norm_layer=partial(nn.GroupNorm, 32),
     )
     head.regression_head._loss_type = "giou"
-    model = RetinaNet(backbone, num_classes, anchor_generator=anchor_generator, head=head, **kwargs)
+    model = RetinaNetV2(backbone, num_classes, anchor_generator=anchor_generator, head=head, **kwargs)
 
     if weights is not None:
         model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
