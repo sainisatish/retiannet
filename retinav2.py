@@ -24,10 +24,10 @@ from .transform import GeneralizedRCNNTransform
 
 __all__ = [
     "RetinaNetV2",
-    "RetinaNet_ResNet50_FPN_Weights",
-    "RetinaNet_ResNet50_FPN_V2_Weights",
-    "retinanet_resnet50_fpn",
-    "retinanet_resnet50_fpn_v2",
+    "RetinaNetV2_ResNet50_FPN_Weights",
+    "RetinaNetV2_ResNet50_FPN_V2_Weights",
+    "RetinaNetV2_resnet50_fpn",
+    "RetinaNetV2_resnet50_fpn_v2",
 ]
 
 
@@ -680,7 +680,7 @@ _COMMON_META = {
 }
 
 
-class RetinaNet_ResNet50_FPN_Weights(WeightsEnum):
+class RetinaNetV2_ResNet50_FPN_Weights(WeightsEnum):
     COCO_V1 = Weights(
         url="https://download.pytorch.org/models/retinanet_resnet50_fpn_coco-eeacb38b.pth",
         transforms=ObjectDetection,
@@ -701,7 +701,7 @@ class RetinaNet_ResNet50_FPN_Weights(WeightsEnum):
     DEFAULT = COCO_V1
 
 
-class RetinaNet_ResNet50_FPN_V2_Weights(WeightsEnum):
+class RetinaNetV2_ResNet50_FPN_V2_Weights(WeightsEnum):
     COCO_V1 = Weights(
         url="https://download.pytorch.org/models/retinanet_resnet50_fpn_v2_coco-5905b1c5.pth",
         transforms=ObjectDetection,
@@ -724,12 +724,12 @@ class RetinaNet_ResNet50_FPN_V2_Weights(WeightsEnum):
 
 @register_model()
 @handle_legacy_interface(
-    weights=("pretrained", RetinaNet_ResNet50_FPN_Weights.COCO_V1),
+    weights=("pretrained", RetinaNetV2_ResNet50_FPN_Weights.COCO_V1),
     weights_backbone=("pretrained_backbone", ResNet50_Weights.IMAGENET1K_V1),
 )
-def retinanet_resnet50_fpn(
+def RetinaNetV2_resnet50_fpn(
     *,
-    weights: Optional[RetinaNet_ResNet50_FPN_Weights] = None,
+    weights: Optional[RetinaNetV2_ResNet50_FPN_Weights] = None,
     progress: bool = True,
     num_classes: Optional[int] = None,
     weights_backbone: Optional[ResNet50_Weights] = ResNet50_Weights.IMAGENET1K_V1,
@@ -797,7 +797,7 @@ def retinanet_resnet50_fpn(
     .. autoclass:: torchvision.models.detection.RetinaNet_ResNet50_FPN_Weights
         :members:
     """
-    weights = RetinaNet_ResNet50_FPN_Weights.verify(weights)
+    weights = RetinaNetV2_ResNet50_FPN_Weights.verify(weights)
     weights_backbone = ResNet50_Weights.verify(weights_backbone)
 
     if weights is not None:
@@ -819,7 +819,7 @@ def retinanet_resnet50_fpn(
 
     if weights is not None:
         model.load_state_dict(weights.get_state_dict(progress=progress, check_hash=True))
-        if weights == RetinaNet_ResNet50_FPN_Weights.COCO_V1:
+        if weights == RetinaNetV2_ResNet50_FPN_Weights.COCO_V1:
             overwrite_eps(model, 0.0)
 
     return model
@@ -827,12 +827,12 @@ def retinanet_resnet50_fpn(
 
 @register_model()
 @handle_legacy_interface(
-    weights=("pretrained", RetinaNet_ResNet50_FPN_V2_Weights.COCO_V1),
+    weights=("pretrained", RetinaNetV2_ResNet50_FPN_V2_Weights.COCO_V1),
     weights_backbone=("pretrained_backbone", ResNet50_Weights.IMAGENET1K_V1),
 )
-def retinanet_resnet50_fpn_v2(
+def RetinaNetV2_resnet50_fpn_v2(
     *,
-    weights: Optional[RetinaNet_ResNet50_FPN_V2_Weights] = None,
+    weights: Optional[RetinaNetV2_ResNet50_FPN_V2_Weights] = None,
     progress: bool = True,
     num_classes: Optional[int] = None,
     weights_backbone: Optional[ResNet50_Weights] = None,
@@ -870,7 +870,7 @@ def retinanet_resnet50_fpn_v2(
     .. autoclass:: torchvision.models.detection.RetinaNet_ResNet50_FPN_V2_Weights
         :members:
     """
-    weights = RetinaNet_ResNet50_FPN_V2_Weights.verify(weights)
+    weights = RetinaNetV2_ResNet50_FPN_V2_Weights.verify(weights)
     weights_backbone = ResNet50_Weights.verify(weights_backbone)
 
     if weights is not None:
