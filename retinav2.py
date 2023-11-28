@@ -481,7 +481,7 @@ class RetinaNetV2(nn.Module):
 
     @torch.jit.unused
     def eager_outputs(self, losses, detections):
-        print("Excuting the code")
+        #print("Excuting the code")
         # type: (Dict[str, Tensor], List[Dict[str, Tensor]]) -> Tuple[Dict[str, Tensor], List[Dict[str, Tensor]]]
         if self.training:
             return losses
